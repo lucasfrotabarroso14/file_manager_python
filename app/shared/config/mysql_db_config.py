@@ -73,10 +73,10 @@ class MySqlConfig:
             print("Erro ao executar a query:", err)
             return str(err), False
 
-    def get_last_inserted_id(self):
+    def get_last_inserted_id(self,table : str,column: str):
         try:
             query = f"""
-            SELECT id FROM Files ORDER BY id DESC LIMIT 1
+            SELECT {column} FROM {table} ORDER BY id DESC LIMIT 1
             """
             result, status = self.execute_query(query, {})
 

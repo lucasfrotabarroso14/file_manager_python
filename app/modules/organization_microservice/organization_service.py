@@ -3,13 +3,13 @@ from app.shared.config.mysql_db_config import MySqlConfig
 
 class OrganizationService:
 
-    def __init__(self,content):
+    def __init__(self,content=None):
         self.MySqlConnect = MySqlConfig()
         self.content = content
 
     def get_all_organizations(self) :
         try:
-            query = "SELECT * FROM Organization"
+            query = "SELECT * FROM Organizations"
             result, status = self.MySqlConnect.execute_query(query, {})
             if status:
                 return result, True

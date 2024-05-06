@@ -1,3 +1,4 @@
+import json
 from urllib import request
 
 from app.shared.config.mysql_db_config import MySqlConfig
@@ -36,8 +37,13 @@ class UserService:
         """
 
         result, status = self.MySqlConnect.execute_query(query, {})
+
         if status:
-            return result, True
+            last_id, status = self.MySqlConnect.get_last_inserted_id(table='Users', column='id')
+            if status:
+                return last_id, True
+            else:
+                return "Error retrieving last inserted ID", False
         else:
             raise Exception("Failed to fetch users from the database")
 
@@ -56,3 +62,36 @@ class UserService:
             return result, True
         else:
             raise Exception("Failed to fetch users from the database")
+
+    def get_all_organization_permissions(self):
+
+        query = f"""
+        SELECT p.id,p.file_id,p.permission_type,p.access_users_ids,p.uploader_user_id,o.id as organization_id
+            from
+            permissions p inner join
+            organizations o 
+            where 
+            o.id = {self.content['organization_id']} 
+        """
+
+        result, status = self.MySqlConnect.execute_query(query, {})
+        if status:
+            return result, True
+        else:
+            raise Exception("Failed to fetch users from the database")
+
+    def update_access_users_ids(self, permission_register, new_access_users_ids):
+        try:
+            permission_id = permission_register["id"]
+
+            query = f"""
+                   UPDATE Permissions
+                   SET access_users_ids = '{new_access_users_ids}'
+                   WHERE id = {permission_id}
+               """
+            result, status = self.MySqlConnect.execute_query(query, {})
+            if status:
+                return "Successfully updated access users ids", True
+        except Exception as e:
+            print(f"Error updating access_users_ids: {str(e)}")
+            return False

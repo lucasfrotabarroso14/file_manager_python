@@ -51,7 +51,7 @@ class FileService:
             result, status = self.MySqlConnect.execute_query(query, {})
 
             if status:
-                last_id, status = self.MySqlConnect.get_last_inserted_id()
+                last_id, status = self.MySqlConnect.get_last_inserted_id(table ='Files',column='id')
                 if status:
                     return last_id, True
                 else:

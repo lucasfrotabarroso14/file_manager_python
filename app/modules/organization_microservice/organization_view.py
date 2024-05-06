@@ -7,6 +7,31 @@ from app.modules.organization_microservice.organization_service import Organizat
 
 class OrganizationResource(Resource):
 
+    def get(self):
+        try:
+            organization_service = OrganizationService()
+            organizations, status = organization_service.get_all_organizations()
+            if status:
+                return {
+                    "status": True,
+                    "status_code": 200,
+                    "result": organizations,
+                }
+            else:
+                return {
+                    "status": False,
+                    "status_code": 500,
+                    "result": 'failed to get organizations',
+
+                }
+        except Exception as e:
+            return {
+                "status": False,
+                "status_code": 500,
+                "result": str(e),
+
+            }
+
     def post(self):
         try:
             data = request.get_json()
