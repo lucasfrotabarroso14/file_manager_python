@@ -5,7 +5,7 @@ from app.shared.config.mysql_db_config import MySqlConfig
 
 class UserService:
 
-    def __init__(self,content):
+    def __init__(self,content=None):
         self.MySqlConnect = MySqlConfig()
         self.content = content
 
@@ -14,6 +14,16 @@ class UserService:
         result, status = self.MySqlConnect.execute_query(query, {})
         if status:
             return result
+        else:
+            raise Exception("Failed to fetch users from the database")
+
+    def get_user_by_id(self,user_id):
+        query = f"""
+        SELECT * FROM Users WHERE id = {user_id}
+        """
+        result, status = self.MySqlConnect.execute_query(query, {})
+        if status:
+            return result, True
         else:
             raise Exception("Failed to fetch users from the database")
 

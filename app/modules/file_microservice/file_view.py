@@ -6,28 +6,36 @@ from app.modules.file_microservice.file_model import File
 from app.modules.file_microservice.file_service import FileService
 from app.modules.user_microservice.user_model import User
 
+import json
+
+from app.modules.user_microservice.user_service import UserService
 
 
 class FileResource(Resource):
 
     def get(self):
         try:
-
             file_service = FileService()
-            result, status = file_service.get_all_files()
+            all_files, status = file_service.get_all_files()
+            array_with_allows_names = []
+            user_service = UserService()
 
-            if status:
-                return {
-                    "status": True,
-                    "status_code": 200,
-                    "result": result,
-                }
-            else:
-                return {
-                    "status": False,
-                    "status_code": 500,
-                    "result": "Error uploading file",
-                }
+            for file in all_files:
+                array_with_ids = json.loads(file['access_users_ids'])
+                user_names = []
+                for id in array_with_ids:
+                    user_info, status = user_service.get_user_by_id(user_id=id)
+                    if user_info:
+                        user_names.append(user_info[0]['name'])
+                file['access_users_names'] = user_names
+                file['access_users_ids'] = array_with_ids
+
+            print(all_files)
+            return {
+                "status": True,
+                "status_code": 200,
+                "result": all_files,
+            }
 
         except Exception as e:
             return {
@@ -35,8 +43,6 @@ class FileResource(Resource):
                 "status_code": 500,
                 "result": str(e),
             }
-
-
 
     def post(self):
         try:

@@ -9,7 +9,13 @@ class FileService:
 
     def get_all_files(self):
         query = f"""
-        SELECT * FROM Files
+            
+                        SELECT f.id, f.file_name, f.file_size, f.file_type, u.name as owner_name, p.access_users_ids, p.permission_type
+        FROM Files f
+        INNER JOIN Permissions p ON f.id = p.file_id
+        INNER JOIN Users u ON f.user_id = u.id
+        
+        
         """
         result, status = self.MySqlConnect.execute_query(query, {})
         print(result)
@@ -118,8 +124,10 @@ class FileService:
 
     def get_file_info(self, file_id):
         query = f"""
-               SELECT * FROM Files
-               WHERE id = {file_id}
+                 SELECT f.id,f.file_name, f.file_size,f.file_type,u.name  as owner_name
+                   FROM Files f
+                   inner join users u 
+               WHERE f.id = {file_id}
            """
         try:
             result, status = self.MySqlConnect.execute_query(query, {})

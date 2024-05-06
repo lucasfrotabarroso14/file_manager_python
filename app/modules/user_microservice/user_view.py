@@ -62,15 +62,15 @@ class UserDetail(Resource):
                 }
             available_files = []
             for permission in user_permissions:
-
                 file_info, status = file_service.get_file_info(permission['file_id'])
                 if status:
                     available_files.append(file_info)
-                return {
-                    "status": True,
-                    "status_code": 200,
-                    "result": available_files,
-                }
+            return {
+                "status": True,
+                "status_code": 200,
+                "result": available_files,
+            }
+
 
         except Exception as e:
             return {
