@@ -4,6 +4,7 @@ from flask_restful import Resource
 
 from app.modules.file_microservice.file_model import File
 from app.modules.file_microservice.file_service import FileService
+from app.modules.organization_microservice.organization_service import OrganizationService
 from app.modules.user_microservice.user_model import User
 
 import json
@@ -51,16 +52,41 @@ class FileResource(Resource):
                 "file_name": data["file_name"],
                 "file_type": data["file_type"],
                 "file_size": data["file_size"],
-                "user_id": data['user_id'],
+                "uploader_user_id": data['uploader_user_id'],
 
                 "permission_type": data.get("permission_type", "Geral"),
                 "access_users_ids": [],
 
 
             }
-            if content['permission_type'] == 'Geral':
+            #criar uma funcao que receba um organization_id e traga todos os usuarios dessa organizacao
+            if content['permission_type'] == 'Publico':
                 file_service = FileService(content)
                 new_file_id, status = file_service.upload_new_file_db()
+
+            elif content['permission_type'] == 'Geral':
+                #preciso descorir qual a organizacao do usuario pelo id do usuario
+                user_service = UserService(content)
+                organization, status = user_service.get_organization_by_user_id()
+
+                content["organization_id"] = organization[0]['organization_id']
+
+                organization_service = OrganizationService(content)
+                all_users_from_organization, status = organization_service.get_users_from_organization_by_organization_id()
+                array_with_allow_users = []
+                for user in all_users_from_organization:
+                    array_with_allow_users.append(user['uploader_user_id'])
+                content["access_users_ids"] = array_with_allow_users
+                print(content["access_users_ids"])
+
+                file_service = FileService(content)
+                new_file_id, status = file_service.upload_new_file_db()
+                content["file_id"] = new_file_id
+                file_service = FileService(content)
+                result, status = file_service.create_access_for_users()
+
+
+
 
             elif content['permission_type'] == 'Selecionados':
                 file_service = FileService(content)
@@ -114,7 +140,7 @@ class FileDetail(Resource):
                 "permission_type": data.get("permission_type", "Geral"),
                 "access_users_ids": data.get("access_users_ids", []),
             }
-            if content['permission_type'] == 'Geral':
+            if content['permission_type'] == 'Publico':
                 content['access_users_ids'] = []
 
             file_service = FileService(content)

@@ -44,7 +44,7 @@ class FileService:
         query = f"""
         INSERT INTO Files (file_name, file_type, file_size, user_id)
         VALUES ('{self.content['file_name']}', '{self.content['file_type']}',
-                {self.content['file_size']}, {self.content['user_id']})
+                {self.content['file_size']}, {self.content['uploader_user_id']})
         """
 
         try:

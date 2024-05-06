@@ -40,3 +40,19 @@ class UserService:
             return result, True
         else:
             raise Exception("Failed to fetch users from the database")
+
+    def get_organization_by_user_id(self):
+
+        query = f"""
+                SELECT o.id as organization_id, o.name AS organization_name, u.name 
+        FROM organizations o INNER JOIN
+        users u 
+        WHERE u.organization_id = o.id
+        AND u.id = {self.content['uploader_user_id']}
+        """
+
+        result, status = self.MySqlConnect.execute_query(query, {})
+        if status:
+            return result, True
+        else:
+            raise Exception("Failed to fetch users from the database")

@@ -53,6 +53,7 @@ class UserDetail(Resource):
                 "user_id": user_id,
             }
             file_service = FileService(content)
+            # ele vai fazer um like no campo acce_ussers_id e vai trazer todos os registros de permissao para os usuarios dentro do array de access
             user_permissions, status =file_service.get_user_permissions()
             if not status:
                 return {
@@ -61,6 +62,7 @@ class UserDetail(Resource):
                     "result": "Error fetching user permissions",
                 }
             available_files = []
+            #para cada registro que tenho  permissao eu vou pegar o file_id e trazer ele
             for permission in user_permissions:
                 file_info, status = file_service.get_file_info(permission['file_id'])
                 if status:
