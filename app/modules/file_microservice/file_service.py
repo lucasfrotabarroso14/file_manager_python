@@ -104,3 +104,28 @@ class FileService:
 
         except Exception as e:
             return str(e), False
+
+    def get_user_permissions(self):
+        query = f"""
+               SELECT * FROM Permissions
+               WHERE access_users_ids LIKE '%{self.content['user_id']}%'
+           """
+        try:
+            result, status = self.MySqlConnect.execute_query(query, {})
+            return result, status
+        except Exception as e:
+            return str(e), False
+
+    def get_file_info(self, file_id):
+        query = f"""
+               SELECT * FROM Files
+               WHERE id = {file_id}
+           """
+        try:
+            result, status = self.MySqlConnect.execute_query(query, {})
+            if status and result:
+                return result[0], True
+            else:
+                return None, False
+        except Exception as e:
+            return None, False

@@ -97,9 +97,9 @@ class FileResource(Resource):
 
 
 class FileDetail(Resource):
-    # vou adicionar usuarios no array de permissao do file
-    #fazer um get pelo id e trazer o array
-    #pegar da request um parametro chamado user_to_access
+
+
+
     def put(self, file_id):
         try:
             data = request.get_json()
