@@ -95,4 +95,37 @@ Retorna uma lista de todos os arquivos aos quais um usuário específico tem ace
 
 ---
 
+## Uso de Cache de Dados com Redis
+
+O sistema utiliza o Redis como uma solução de cache de dados para otimizar o desempenho da API, especialmente na busca de arquivos de um usuário específico. 
+
+Aqui está um exemplo de como o Redis é usado para armazenar em cache os arquivos de um usuário:
+
+```python
+class UserDetail(Resource):
+    def __init__(self):
+        self.redis_client = RedisClient()
+
+    def get(self, user_id):
+        try:
+            # Código para buscar arquivos de um usuário específico...
+
+            if available_files:
+                file_id = available_files[0]['id']
+                cached_data = self.redis_client.get_cache(f"file_{file_id}")
+                if cached_data is not None and len(cached_data.get('result', [])) > 0:
+                    return cached_data
+                else:
+                    self.redis_client.set_cache(f"file_{file_id}", response)
+
+            return response
+
+        except Exception as e:
+            return {
+                "status": False,
+                "status_code": 500,
+                "result": str(e),
+            }
+
+
 Este é um esboço básico da API para o gerenciador de arquivos. Sinta-se à vontade para adaptá-lo conforme suas necessidades específicas!
