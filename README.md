@@ -133,4 +133,50 @@ class UserDetail(Resource):
 
 ![Diagrama do Banco de Dados](https://i.imgur.com/mFAU8pA.png)
 
+---
+
+## Docker Compose
+
+Este projeto utiliza o Docker Compose para orquestrar os contêineres necessários. O arquivo `docker-compose.yml` contém as configurações para os serviços de banco de dados MySQL, Adminer (interface web para gerenciamento de banco de dados) e Redis (utilizado para cache de dados).
+
+### Executando o Projeto
+
+Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em seguida, siga estas etapas:
+
+1. Clone o repositório do projeto:
+
+    ```bash
+    git clone <url_do_seu_repositorio>
+    ```
+
+2. Navegue até o diretório do projeto:
+
+    ```bash
+    cd nome_do_seu_projeto
+    ```
+
+3. Execute o comando Docker Compose para iniciar os contêineres:
+
+    ```bash
+    docker-compose up -d
+    ```
+
+Isso iniciará os serviços especificados no arquivo `docker-compose.yml` em segundo plano (`-d`).
+
+4. Acesse o Adminer em seu navegador:
+
+    O Adminer estará disponível em [http://localhost:8086](http://localhost:8086). Use as credenciais especificadas no arquivo `docker-compose.yml` para fazer login no banco de dados MySQL.
+
+5. Execute seu projeto:
+
+    Agora você pode executar seu projeto localmente. Certifique-se de que ele esteja configurado para se conectar ao banco de dados MySQL usando as credenciais especificadas no arquivo `docker-compose.yml`.
+
+6. Para parar os contêineres quando não estiver mais em uso, execute:
+
+    ```bash
+    docker-compose down
+    ```
+
+Isso irá desligar e remover os contêineres, mas manterá os dados do banco de dados no volume.
+
 
