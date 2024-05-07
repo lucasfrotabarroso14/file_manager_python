@@ -11,6 +11,7 @@ import json
 
 from app.modules.user_microservice.user_service import UserService
 from app.shared.config.redis_client import RedisClient
+from app.shared.helpers.celery_worker import upload_simulate_file
 
 
 class FileResource(Resource):
@@ -62,8 +63,19 @@ class FileResource(Resource):
             }
             #criar uma funcao que receba um organization_id e traga todos os usuarios dessa organizacao
             if content['permission_type'] == 'Publico':
+                user_service = UserService(content)
+                all_id_users, status = user_service.get_all_users_ids()
+                array_with_allow_id = []
+                for id in all_id_users:
+                    array_with_allow_id.append(id['ID'])
+                content["access_users_ids"] = array_with_allow_id
                 file_service = FileService(content)
                 new_file_id, status = file_service.upload_new_file_db()
+                content["file_id"] = new_file_id
+                file_service = FileService(content)
+                result, status = file_service.create_access_for_users()
+
+
 
             elif content['permission_type'] == 'Geral':
                 #preciso descorir qual a organizacao do usuario pelo id do usuario
@@ -109,6 +121,11 @@ class FileResource(Resource):
 
 
             if status:
+
+                # Essa funcao abaixo vai simular um upload em segundo plano com o celery:
+                # para executar o celery digite no cmd: celery -A app.shared.helpers.celery_worker worker --loglevel=info
+
+                upload_simulate_file.delay()
                 return {
                     "status": True,
                     "status_code": 200,
@@ -142,6 +159,7 @@ class FileDetail(Resource):
                 "permission_type": data.get("permission_type", "Geral"),
                 "access_users_ids": data.get("access_users_ids", []),
             }
+            #criar uma funcao que pegue todos os ids de usuarios e coloque dentro do access
             if content['permission_type'] == 'Publico':
                 content['access_users_ids'] = []
 

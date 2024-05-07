@@ -10,6 +10,31 @@ from app.shared.config.redis_client import RedisClient
 import json
 class UserResource(Resource):
 
+    def get(self):
+        try:
+            user_service = UserService()
+            all_users, status = user_service.get_all_users_db()
+            if status:
+                return {
+                    "status": True,
+                    "status_code": 200,
+                    "result": all_users,
+                }
+            else:
+                return {
+                    "status": False,
+                    "status_code": 500,
+                    "result": "Error",
+                }
+        except Exception as e:
+            return {
+                "status": False,
+                "status_code": 500,
+                "result": str(e),
+            }
+
+
+
 
 
     def post(self):

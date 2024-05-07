@@ -10,11 +10,45 @@ class UserService:
         self.MySqlConnect = MySqlConfig()
         self.content = content
 
-    def get_all_users(self) :
-        query = "SELECT * FROM Users"
+    def get_all_users_db(self):
+        query = f"""
+        SELECT u.*, o.name as organization_name  from Users u
+            inner join Organizations o 
+            where u.organization_id =o.id 
+
+        """
         result, status = self.MySqlConnect.execute_query(query, {})
         if status:
-            return result
+            return result, status
+        else:
+            raise Exception("Failed to fetch users from the database")
+
+
+    # def get_all_users_from_organization(self, organization_id):
+    #
+    #     query = f"""
+    #                        SELECT u.*, o.name as organization_name
+    #         FROM Users u
+    #         INNER JOIN Organizations o ON u.organization_id = o.id
+    #         WHERE o.id = {organization_id}
+    #
+    #
+    #            """
+    #     result, status = self.MySqlConnect.execute_query(query, {})
+    #     if status:
+    #         return result, status
+    #     else:
+    #         raise Exception("Failed to fetch users from the database")
+
+    def get_all_users_ids(self):
+        query = f"""
+                             SELECT ID FROM Users
+
+
+                  """
+        result, status = self.MySqlConnect.execute_query(query, {})
+        if status:
+            return result, status
         else:
             raise Exception("Failed to fetch users from the database")
 
@@ -62,6 +96,24 @@ class UserService:
             return result, True
         else:
             raise Exception("Failed to fetch users from the database")
+
+
+    def get_all_users(self):
+
+        query = f"""
+                SELECT o.id as organization_id, o.name AS organization_name, u.name 
+        FROM Organizations o INNER JOIN
+        Users u 
+        WHERE u.organization_id = o.id
+        AND u.id = {self.content['uploader_user_id']}
+        """
+
+        result, status = self.MySqlConnect.execute_query(query, {})
+        if status:
+            return result, True
+        else:
+            raise Exception("Failed to fetch users from the database")
+
 
     def get_all_organization_permissions(self):
 
