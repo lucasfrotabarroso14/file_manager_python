@@ -1,6 +1,6 @@
 # Desafio: Gerenciador de Arquivos
 
-Este é um projeto de um gerenciador de arquivos simples, com recursos básicos de criação, edição e exclusão de arquivos, além da gestão de usuários e organizações.
+Este é um projeto de um gerenciador de arquivos simples, com recursos básicos de criação, edição e exclusão de arquivos, além da gestão de permissões e organizações.
 
 ## Rotas da API
 
