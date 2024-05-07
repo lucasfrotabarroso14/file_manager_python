@@ -78,7 +78,7 @@ class FileResource(Resource):
 
 
             elif content['permission_type'] == 'Geral':
-                #preciso descorir qual a organizacao do usuario pelo id do usuario
+
                 user_service = UserService(content)
                 organization, status = user_service.get_organization_by_user_id()
 

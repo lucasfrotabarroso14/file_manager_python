@@ -123,7 +123,7 @@ class FileService:
            """
         try:
             result, status = self.MySqlConnect.execute_query(query, {})
-            #crie uma variavel global que armazene o result[0]['file_id'] pois quero usar ela la encima como cahce key, faca para moim chat gpt
+
             return result, status
 
         except Exception as e:
