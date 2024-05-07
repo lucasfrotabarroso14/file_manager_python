@@ -128,4 +128,4 @@ class UserDetail(Resource):
             }
 
 
-Este é um esboço básico da API para o gerenciador de arquivos. Sinta-se à vontade para adaptá-lo conforme suas necessidades específicas!
+
