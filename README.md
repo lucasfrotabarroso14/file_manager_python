@@ -93,24 +93,6 @@ Este é um projeto de um gerenciador de arquivos simples, com recursos básicos 
 
   Retorna uma lista de todos os arquivos aos quais um usuário específico tem acesso.
 
-## Celery para Processamento de Tarefas em Segundo Plano
-
-O Celery é uma ferramenta de fila de tarefas distribuída que permite executar tarefas de forma assíncrona ou em segundo plano. Na aplicação, o Celery é utilizado para processar tarefas que podem demorar um tempo considerável para serem concluídas sem bloquear o fluxo principal da aplicação.
-
-#### Configuração do Celery
-
-O Celery é configurado na aplicação da seguinte maneira:
-
-```python
-from celery import Celery
-import time
-
-# Configure Celery
-celery = Celery(
-    'tasks',
-    broker='redis://localhost:6379/0',  # URL do Redis
-    backend='redis://localhost:6379/0',  # URL do Redis
-)
 
 ---
 
@@ -145,5 +127,9 @@ class UserDetail(Resource):
                 "status_code": 500,
                 "result": str(e),
             }
+
+
+
+
 
 
