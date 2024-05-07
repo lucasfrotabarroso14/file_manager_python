@@ -93,7 +93,6 @@ Este é um projeto de um gerenciador de arquivos simples, com recursos básicos 
 
   Retorna uma lista de todos os arquivos aos quais um usuário específico tem acesso.
 
-
 ---
 
 ## Uso de Cache de Dados com Redis
@@ -128,8 +127,10 @@ class UserDetail(Resource):
                 "result": str(e),
             }
 
+---
 
+## Diagrama do Banco de Dados
 
-
+![Diagrama do Banco de Dados](https://i.imgur.com/mFAU8pA.png)
 
 
