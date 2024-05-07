@@ -1,4 +1,4 @@
-# # Desafio: Gerenciador de Arquivos
+# Desafio: Gerenciador de Arquivos
 
 Este é um projeto de um gerenciador de arquivos simples, com recursos básicos de criação, edição e exclusão de arquivos, além da gestão de usuários e organizações.
 
@@ -8,11 +8,11 @@ Este é um projeto de um gerenciador de arquivos simples, com recursos básicos 
 
 - **Listar Organizações:** `GET /api/v1/organizations`
 
-Retorna uma lista de todas as organizações cadastradas.
+  Retorna uma lista de todas as organizações cadastradas.
 
 - **Criar Organização:** `POST /api/v1/organizations`
 
-Cria uma nova organização com o nome especificado.
+  Cria uma nova organização com o nome especificado.
 
     Exemplo de requisição:
     ```json
@@ -25,7 +25,7 @@ Cria uma nova organização com o nome especificado.
 
 - **Criar Usuário:** `POST /api/v1/users`
 
-Cria um novo usuário e o associa a uma organização existente.
+  Cria um novo usuário e o associa a uma organização existente.
 
     Exemplo de requisição:
     ```json
@@ -39,15 +39,15 @@ Cria um novo usuário e o associa a uma organização existente.
 
 - **Listar Todos os Usuários:** `GET /api/v1/users`
 
-Retorna uma lista de todos os usuários cadastrados.
+  Retorna uma lista de todos os usuários cadastrados.
 
 ### Arquivos
 
 - **Upload de Arquivo:** `POST /api/v1/file`
 
-Faz o upload de um novo arquivo. 
+  Faz o upload de um novo arquivo.
 
-    Exemplo de requisição para arquivo público:
+    - Exemplo de requisição para arquivo público:
     ```json
     {
         "file_name": "Nome do Arquivo",
@@ -58,7 +58,7 @@ Faz o upload de um novo arquivo.
     }
     ```
 
-    Exemplo de requisição para arquivo com acesso selecionado:
+    - Exemplo de requisição para arquivo com acesso selecionado:
     ```json
     {
         "file_name": "Nome do Arquivo",
@@ -72,11 +72,11 @@ Faz o upload de um novo arquivo.
 
 - **Listar Todos os Arquivos:** `GET /api/v1/file`
 
-Retorna uma lista de todos os arquivos cadastrados.
+  Retorna uma lista de todos os arquivos cadastrados.
 
 - **Alterar Permissão de Arquivo:** `PUT /api/v1/file/<int:file_id>`
 
-Altera o tipo de permissão de um arquivo específico.
+  Altera o tipo de permissão de um arquivo específico.
 
     Exemplo de requisição:
     ```json
@@ -87,11 +87,11 @@ Altera o tipo de permissão de um arquivo específico.
 
 - **Deletar Arquivo:** `DELETE /api/v1/file/<int:file_id>`
 
-Remove um arquivo específico do sistema.
+  Remove um arquivo específico do sistema.
 
 - **Listar Arquivos de um Usuário:** `GET /api/v1/user/files/<int:user_id>`
 
-Retorna uma lista de todos os arquivos aos quais um usuário específico tem acesso.
+  Retorna uma lista de todos os arquivos aos quais um usuário específico tem acesso.
 
 ---
 
@@ -127,10 +127,6 @@ class UserDetail(Resource):
                 "result": str(e),
             }
 
-
-
-
---
 ## Celery para Processamento de Tarefas em Segundo Plano
 
 O Celery é uma ferramenta de fila de tarefas distribuída que permite executar tarefas de forma assíncrona ou em segundo plano. Na aplicação, o Celery é utilizado para processar tarefas que podem demorar um tempo considerável para serem concluídas sem bloquear o fluxo principal da aplicação.
