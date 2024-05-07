@@ -39,13 +39,13 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
 1. Clone o repositório do projeto:
 
     ```bash
-    git clone <url_do_seu_repositorio>
+    git clone https://github.com/lucasfrotabarroso14/file_manager_python.git
     ```
 
 2. Navegue até o diretório do projeto:
 
     ```bash
-    cd nome_do_seu_projeto
+    cd file_manager_python
     ```
 
 3. Execute o comando Docker Compose para iniciar os contêineres:
