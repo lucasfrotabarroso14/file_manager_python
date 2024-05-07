@@ -10,6 +10,7 @@ from app.modules.user_microservice.user_model import User
 import json
 
 from app.modules.user_microservice.user_service import UserService
+from app.shared.config.redis_client import RedisClient
 
 
 class FileResource(Resource):
@@ -129,6 +130,7 @@ class FileResource(Resource):
 
 
 class FileDetail(Resource):
+    redis_client = RedisClient()
 
 
 
@@ -174,6 +176,8 @@ class FileDetail(Resource):
             file_service = FileService(content)
             result, status = file_service.delete_file()
             if status and result == 1:
+                self.redis_client.delete_cache(f"file_{file_id}")
+
                 return {
                     "status": True,
                     "status_code": 204,

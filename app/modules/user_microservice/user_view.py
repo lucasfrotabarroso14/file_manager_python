@@ -34,7 +34,7 @@ class UserResource(Resource):
             #funcao para atualizar todos os access das permissions adicionando o id do usuario nos arrays de access_users_ids
             if status:
                 organization_permissions, status = user_service.get_all_organization_permissions()
-                if status:
+                if status and len(organization_permissions) > 0:
                     for permission_register in organization_permissions:
                         access_users_ids = json.loads(permission_register['access_users_ids'])
 
@@ -52,6 +52,11 @@ class UserResource(Resource):
                                 "status_code": 500,
                                 "result": "Error creating User",
                             }
+                return {
+                        "status": True,
+                        "status_code": 200,
+                        "result": "User created",
+                    }
 
         except Exception as e:
             return {
@@ -61,28 +66,25 @@ class UserResource(Resource):
             }
 
 class UserDetail(Resource):
-    # def __init__(self):
-    #     self.redis_client = RedisClient()
+    def __init__(self):
+        self.redis_client = RedisClient()
 
-    def get(self,user_id):
+    def get(self, user_id):
         try:
-            # cached_data = self.redis_client.get_cache(f"user_{user_id}")
-            # if cached_data:
-            #     return cached_data
             content = {
                 "user_id": user_id,
             }
             file_service = FileService(content)
 
-            user_permissions, status =file_service.get_user_permissions()
+            user_permissions, status = file_service.get_user_permissions()
             if not status:
                 return {
                     "status": False,
                     "status_code": 500,
                     "result": "Error fetching user permissions",
                 }
+
             available_files = []
-            #para cada registro que tenho  permissao eu vou pegar o file_id e trazer ele
             for permission in user_permissions:
                 file_info, status = file_service.get_file_info(permission['file_id'])
                 if status:
@@ -94,10 +96,19 @@ class UserDetail(Resource):
                 "result": available_files,
             }
 
-            # self.redis_client.set_cache(f"user_{user_id}",response)
+
+            if available_files:
+
+                file_id = available_files[0]['id']
+
+                cached_data = self.redis_client.get_cache(f"file_{file_id}")
+                if cached_data is not None and len(cached_data.get('result', [])) > 0:
+                    return cached_data
+                else:
+
+                    self.redis_client.set_cache(f"file_{file_id}", response)
 
             return response
-
 
         except Exception as e:
             return {
@@ -105,6 +116,9 @@ class UserDetail(Resource):
                 "status_code": 500,
                 "result": str(e),
             }
+
+
+
 
 
 

@@ -1,11 +1,16 @@
 from app.shared.config.mysql_db_config import MySqlConfig
 import json
 
+from app.shared.config.redis_client import RedisClient
+
+
 class FileService:
 
     def __init__(self, content=None):
         self.MySqlConnect = MySqlConfig()
         self.content = content
+        self.redis_client = RedisClient()
+        self.file_id_for_cache = None
 
     def get_all_files(self):
         query = f"""
@@ -118,15 +123,19 @@ class FileService:
            """
         try:
             result, status = self.MySqlConnect.execute_query(query, {})
+            #crie uma variavel global que armazene o result[0]['file_id'] pois quero usar ela la encima como cahce key, faca para moim chat gpt
             return result, status
+
         except Exception as e:
             return str(e), False
+
+
 
     def get_file_info(self, file_id):
         query = f"""
                  SELECT f.id,f.file_name, f.file_size,f.file_type,u.name  as owner_name
                    FROM Files f
-                   inner join users u 
+                   inner join Users u 
                WHERE f.id = {file_id}
            """
         try:
@@ -137,3 +146,4 @@ class FileService:
                 return None, False
         except Exception as e:
             return None, False
+

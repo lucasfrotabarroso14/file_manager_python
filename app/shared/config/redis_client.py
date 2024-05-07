@@ -17,3 +17,7 @@ class RedisClient:
             return json.loads(cached_data)
         else:
             return None
+
+    def delete_cache(self, key):
+        # Exclui a entrada correspondente à chave do cache
+        self.redis_client.delete(key)

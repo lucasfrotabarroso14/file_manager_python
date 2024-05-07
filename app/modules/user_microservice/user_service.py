@@ -51,8 +51,8 @@ class UserService:
 
         query = f"""
                 SELECT o.id as organization_id, o.name AS organization_name, u.name 
-        FROM organizations o INNER JOIN
-        users u 
+        FROM Organizations o INNER JOIN
+        Users u 
         WHERE u.organization_id = o.id
         AND u.id = {self.content['uploader_user_id']}
         """
@@ -68,8 +68,8 @@ class UserService:
         query = f"""
         SELECT p.id,p.file_id,p.permission_type,p.access_users_ids,p.uploader_user_id,o.id as organization_id
             from
-            permissions p inner join
-            organizations o 
+            Permissions p inner join
+            Organizations o 
             where 
             o.id = {self.content['organization_id']} 
         """

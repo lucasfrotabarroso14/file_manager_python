@@ -22,8 +22,8 @@ class OrganizationService:
         try:
             query = f"""
                         SELECT u.id as uploader_user_id, u.name 
-            FROM organizations o INNER JOIN
-            users u 
+            FROM Organizations o INNER JOIN
+            Users u 
            WHERE u.organization_id = o.id
             AND o.id = {self.content['organization_id']}
             """
