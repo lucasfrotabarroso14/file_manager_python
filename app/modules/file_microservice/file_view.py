@@ -61,7 +61,7 @@ class FileResource(Resource):
 
 
             }
-            #criar uma funcao que receba um organization_id e traga todos os usuarios dessa organizacao
+
             if content['permission_type'] == 'Publico':
                 user_service = UserService(content)
                 all_id_users, status = user_service.get_all_users_ids()

@@ -24,21 +24,6 @@ class UserService:
             raise Exception("Failed to fetch users from the database")
 
 
-    # def get_all_users_from_organization(self, organization_id):
-    #
-    #     query = f"""
-    #                        SELECT u.*, o.name as organization_name
-    #         FROM Users u
-    #         INNER JOIN Organizations o ON u.organization_id = o.id
-    #         WHERE o.id = {organization_id}
-    #
-    #
-    #            """
-    #     result, status = self.MySqlConnect.execute_query(query, {})
-    #     if status:
-    #         return result, status
-    #     else:
-    #         raise Exception("Failed to fetch users from the database")
 
     def get_all_users_ids(self):
         query = f"""

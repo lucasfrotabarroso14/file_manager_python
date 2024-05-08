@@ -54,9 +54,7 @@ class UserResource(Resource):
             new_user_id, status = user_service.create_new_user_db()
             content['user_id'] = new_user_id
 
-            # depois que eu criar o usuario tenho que adicionar ele em todos os arrays de access para a organizacao dele
-            # tenho que retornar todos os ids dos registros de permissao  que preciso fazer o update
-            #funcao para atualizar todos os access das permissions adicionando o id do usuario nos arrays de access_users_ids
+
             if status:
                 organization_permissions, status = user_service.get_all_organization_permissions()
                 if status and len(organization_permissions) > 0:
