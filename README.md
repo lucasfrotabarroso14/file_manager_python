@@ -1,6 +1,51 @@
 # Desafio: Gerenciador de Arquivos
 
-Este é um projeto de um gerenciador de arquivos simples, com recursos básicos de criação, edição e exclusão de arquivos, além da gestão de usuários e organizações.
+Este é um projeto de um gerenciador de arquivos simples, com recursos básicos de criação, edição e exclusão de arquivos, além da gestão de permissões e organizações.
+### Executando o Projeto
+
+Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em seguida, siga estas etapas:
+
+1. Clone o repositório do projeto:
+
+    ```bash
+    git clone https://github.com/lucasfrotabarroso14/file_manager_python.git
+    ```
+
+2. instale o venv com o comando 
+
+    ```bash
+    python3.9 -m venv venv
+    ```
+
+
+Isso iniciará os serviços especificados no arquivo `docker-compose.yml` em segundo plano (`-d`).
+
+3. Instale as dependencias do projeto :
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+   
+5. Execute o comando Docker Compose para iniciar os contêineres e rodar os servicos do redis,mysql e admin:
+
+    ```bash
+    docker-compose up 
+    ```
+
+6. Digite na linha de comando o comando abaixo para criar as tabelas e popular dados:
+
+    ```bash
+    docker exec -i file_manager_python-db-1 mysql -u docker -pdocker file_manager < initial_data.sql
+
+    ```
+
+7. Para iniciar o backend python do certifique que está no diretorio raiz e digite :
+
+    ```bash
+    python main.py
+    ```
+
+
 
 ## Rotas da API
 
@@ -101,45 +146,6 @@ Este é um projeto de um gerenciador de arquivos simples, com recursos básicos 
 
 Este projeto utiliza o Docker Compose para orquestrar os contêineres necessários. O arquivo `docker-compose.yml` contém as configurações para os serviços de banco de dados MySQL, Adminer (interface web para gerenciamento de banco de dados) e Redis (utilizado para cache de dados).
 
-### Executando o Projeto
-
-Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em seguida, siga estas etapas:
-
-1. Clone o repositório do projeto:
-
-    ```bash
-    git clone https://github.com/lucasfrotabarroso14/file_manager_python.git
-    ```
-
-2. Navegue até o diretório do projeto:
-
-    ```bash
-    cd file_manager_python
-    ```
-
-3. Execute o comando Docker Compose para iniciar os contêineres:
-
-    ```bash
-    docker-compose up -d
-    ```
-
-Isso iniciará os serviços especificados no arquivo `docker-compose.yml` em segundo plano (`-d`).
-
-4. Acesse o Adminer em seu navegador:
-
-    O Adminer estará disponível em [http://localhost:8086](http://localhost:8086). Use as credenciais especificadas no arquivo `docker-compose.yml` para fazer login no banco de dados MySQL.
-
-5. Execute seu projeto:
-
-    Agora você pode executar seu projeto localmente. Certifique-se de que ele esteja configurado para se conectar ao banco de dados MySQL usando as credenciais especificadas no arquivo `docker-compose.yml`.
-
-6. Para parar os contêineres quando não estiver mais em uso, execute:
-
-    ```bash
-    docker-compose down
-    ```
-
-Isso irá desligar e remover os contêineres, mas manterá os dados do banco de dados no volume.
 
 ### Usando Cache de Dados com Redis
 
