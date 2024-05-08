@@ -39,7 +39,7 @@ class OrganizationService:
     def create_organization_db(self):
 
         query = f"""
-        INSERT INTO Organizations (name) VALUES ('{self.content['organization_name']}')
+        INSERT INTO file_manager.Organizations (name) VALUES ('{self.content['organization_name']}')
         """
 
         try:
@@ -47,7 +47,7 @@ class OrganizationService:
             if status:
                 return result, True
             else:
-                return "Error", False
+                return result, False
 
         except Exception as e:
             return str(e), False

@@ -55,7 +55,7 @@ class OrganizationResource(Resource):
                 return {
                     "status": False,
                     "status_code": 500,
-                    "result": "Error creating organization",
+                    "result": result,
                 }
 
 
