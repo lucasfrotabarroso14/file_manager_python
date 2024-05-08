@@ -16,11 +16,22 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
     ```bash
     python3.9 -m venv venv
     ```
+    
+3. ative o venv
+   Linux ou Mac:
+    ```bash
+    source venv/bin/activate
+    ```
+
+    Windows:
+    ```bash
+       .\venv\Scripts\activate
+    ```
 
 
 
 
-3. Instale as dependencias do projeto :
+4. Instale as dependencias do projeto :
     ```bash
     pip install -r requirements.txt
     ```
