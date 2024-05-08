@@ -11,13 +11,13 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
     git clone https://github.com/lucasfrotabarroso14/file_manager_python.git
     ```
 
-2. instale o venv com o comando 
+2. Crie o venv com o comando 
 
     ```bash
     python -m venv venv
     ```
     
-3. ative o venv
+3. Ative o venv
 
    
    Linux ou Mac:
