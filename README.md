@@ -23,7 +23,7 @@ Isso iniciará os serviços especificados no arquivo `docker-compose.yml` em seg
 3. Instale as dependencias do projeto :
     ```bash
     pip install -r requirements.txt
-       ```
+    ```
 
    
 5. Execute o comando Docker Compose para iniciar os contêineres e rodar os servicos do redis,mysql e admin:
