@@ -18,7 +18,7 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
     ```
 
 
-Isso iniciará os serviços especificados no arquivo `docker-compose.yml` em segundo plano (`-d`).
+
 
 3. Instale as dependencias do projeto :
     ```bash
