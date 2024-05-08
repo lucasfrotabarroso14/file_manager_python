@@ -14,7 +14,7 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
 2. instale o venv com o comando 
 
     ```bash
-    python3.9 -m venv venv
+    python -m venv venv
     ```
     
 3. ative o venv
