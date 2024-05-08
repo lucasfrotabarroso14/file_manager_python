@@ -18,6 +18,8 @@ Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina. Em 
     ```
     
 3. ative o venv
+
+   
    Linux ou Mac:
     ```bash
     source venv/bin/activate
